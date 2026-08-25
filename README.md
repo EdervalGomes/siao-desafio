@@ -4,14 +4,49 @@ Sistema desenvolvido para gerenciamento de cartórios, usuários e imóveis, com
 
 ## Tecnologias
 
-* Laravel
 * PHP
+* Laravel
 * MySQL
 * Laravel Sanctum
 * React
 * Vite
 * Axios
 * Recharts
+* Swagger / OpenAPI
+* PHPUnit
+
+## Funcionalidades
+
+* Login e autenticação de usuários
+* Cadastro, edição e exclusão de cartórios
+* Cadastro, edição e exclusão de usuários
+* Cadastro, edição e exclusão de imóveis
+* Relatório de imóveis por cartório
+* Relatório de valor total dos imóveis
+* Relatório de usuários por cartório
+* Gráfico de imóveis por cartório
+* Documentação da API com Swagger
+* Testes automatizados
+
+## Estrutura do Projeto
+
+```text
+siao-desafio/
+│
+├── backend/
+│   ├── app/
+│   ├── database/
+│   ├── routes/
+│   ├── tests/
+│   └── ...
+│
+├── frontend/
+│   ├── src/
+│   └── ...
+│
+├── README.md
+└── .gitignore
+```
 
 ## Instalação
 
@@ -41,7 +76,7 @@ Gere a chave da aplicação:
 php artisan key:generate
 ```
 
-Configure no `.env` os dados do banco de dados MySQL.
+Configure no arquivo `.env` os dados do banco de dados MySQL.
 
 Execute as migrations:
 
@@ -61,7 +96,7 @@ A API ficará disponível em:
 http://127.0.0.1:8000
 ```
 
-### Frontend
+## Frontend
 
 Em outro terminal, entre na pasta do frontend:
 
@@ -81,47 +116,176 @@ Inicie o servidor React:
 npm run dev
 ```
 
-O frontend ficará disponível no endereço informado pelo Vite.
+O endereço do frontend será informado pelo Vite no terminal.
 
-## Funcionalidades
+## Login
 
-* Login com autenticação Laravel Sanctum
-* Cadastro, edição e exclusão de cartórios
-* Cadastro, edição e exclusão de usuários
-* Cadastro, edição e exclusão de imóveis
-* Relatórios de imóveis por cartório
-* Relatório de valor total dos imóveis
-* Relatório de usuários por cartório
-* Gráfico de imóveis por cartório
-* Testes automatizados
+O sistema possui autenticação utilizando Laravel Sanctum.
+
+O endpoint de login é:
+
+```text
+POST /api/login
+```
+
+Exemplo de credenciais utilizadas durante o desenvolvimento:
+
+```text
+E-mail: admin@teste.com
+Senha: 123456
+```
+
+## Cartórios
+
+O sistema permite:
+
+* cadastrar cartórios;
+* visualizar cartórios;
+* editar cartórios;
+* excluir cartórios.
+
+## Usuários
+
+O sistema permite:
+
+* cadastrar usuários;
+* visualizar usuários;
+* editar usuários;
+* excluir usuários;
+* vincular usuários a cartórios.
+
+## Imóveis
+
+O sistema permite:
+
+* cadastrar imóveis;
+* visualizar imóveis;
+* editar imóveis;
+* excluir imóveis;
+* vincular imóveis a cartórios.
+
+Os imóveis possuem informações como:
+
+* matrícula;
+* proprietário;
+* valor;
+* status.
+
+## Relatórios
+
+O sistema possui um módulo de relatórios com:
+
+### Imóveis por cartório
+
+Apresenta a quantidade de imóveis cadastrados em cada cartório.
+
+### Valor total dos imóveis
+
+Apresenta a soma dos valores de avaliação dos imóveis cadastrados.
+
+### Usuários por cartório
+
+Apresenta a quantidade de usuários vinculados a cada cartório.
+
+### Gráfico
+
+O sistema apresenta um gráfico de barras com a quantidade de imóveis por cartório.
+
+## Documentação da API
+
+A API possui documentação utilizando Swagger/OpenAPI.
+
+Com o backend em execução, acesse:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+A documentação apresenta os principais endpoints da API.
 
 ## Testes
 
-Para executar os testes do backend:
+Os testes automatizados podem ser executados com:
 
 ```bash
 cd backend
 php artisan test
 ```
 
-## Docker
+Os testes implementados verificam funcionalidades como:
 
-O projeto possui a etapa de Docker prevista como ponto extra, porém a execução local foi utilizada como alternativa devido à indisponibilidade de virtualização no ambiente de desenvolvimento.
+* login;
+* criação de cartório;
+* atualização de cartório;
+* exclusão de cartório.
 
-## Execução
+Resultado dos testes durante o desenvolvimento:
 
-Para executar o sistema localmente, mantenha o backend e o frontend rodando em terminais separados:
+```text
+6 testes passaram
+7 assertions
+```
 
-**Backend:**
+## API
+
+Principais endpoints:
+
+```text
+POST   /api/login
+
+GET    /api/cartorios
+POST   /api/cartorios
+GET    /api/cartorios/{id}
+PUT    /api/cartorios/{id}
+DELETE /api/cartorios/{id}
+
+GET    /api/usuarios
+POST   /api/usuarios
+GET    /api/usuarios/{id}
+PUT    /api/usuarios/{id}
+DELETE /api/usuarios/{id}
+
+GET    /api/imoveis
+POST   /api/imoveis
+GET    /api/imoveis/{id}
+PUT    /api/imoveis/{id}
+DELETE /api/imoveis/{id}
+
+GET    /api/relatorios/imoveis-por-cartorio
+GET    /api/relatorios/valor-total-imoveis
+GET    /api/relatorios/usuarios-por-cartorio
+```
+
+## Segurança
+
+As rotas protegidas da API utilizam autenticação através do Laravel Sanctum.
+
+O token de autenticação é enviado nas requisições utilizando o header:
+
+```text
+Authorization: Bearer TOKEN
+```
+
+## Execução Local
+
+Para executar o projeto localmente, mantenha o backend e o frontend rodando em terminais separados.
+
+### Backend
 
 ```bash
 cd backend
 php artisan serve
 ```
 
-**Frontend:**
+### Frontend
 
 ```bash
 cd frontend
 npm run dev
 ```
+
+## Repositório
+
+O projeto está disponível no GitHub:
+
+https://github.com/EdervalGomes/siao-desafio
