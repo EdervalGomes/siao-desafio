@@ -1,47 +1,55 @@
 import { useState } from 'react'
 import axios from 'axios'
 
-function Login() {
+function Login({ onLogin }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [erro, setErro] = useState('')
 
-  const login = async (e) => {
+  const fazerLogin = async (e) => {
     e.preventDefault()
 
-    setErro('')
-
     try {
+      setErro('')
+
       const resposta = await axios.post(
         'http://127.0.0.1:8000/api/login',
         {
           email: email,
           password: password
+        },
+        {
+          headers: {
+            Accept: 'application/json'
+          }
         }
       )
 
       localStorage.setItem('token', resposta.data.token)
 
-      alert('Login realizado com sucesso!')
-
-      console.log('Token:', resposta.data.token)
+      onLogin()
 
     } catch (error) {
       console.error(error)
 
-      if (error.response?.status === 401) {
-        setErro('E-mail ou senha inválidos.')
+      if (error.response?.data?.erro) {
+        setErro(error.response.data.erro)
       } else {
-        setErro('Erro ao conectar com o servidor.')
+        setErro('E-mail ou senha inválidos.')
       }
     }
   }
 
   return (
     <div>
+
       <h1>Login</h1>
 
-      <form onSubmit={login}>
+      {erro && (
+        <p>{erro}</p>
+      )}
+
+      <form onSubmit={fazerLogin}>
 
         <div>
           <label>E-mail</label>
@@ -51,7 +59,6 @@ function Login() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="Digite seu e-mail"
             required
           />
         </div>
@@ -66,7 +73,6 @@ function Login() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="Digite sua senha"
             required
           />
         </div>
@@ -79,9 +85,6 @@ function Login() {
 
       </form>
 
-      {erro && (
-        <p>{erro}</p>
-      )}
     </div>
   )
 }
