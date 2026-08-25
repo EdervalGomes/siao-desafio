@@ -283,9 +283,3 @@ php artisan serve
 cd frontend
 npm run dev
 ```
-
-## Repositório
-
-O projeto está disponível no GitHub:
-
-https://github.com/EdervalGomes/siao-desafio
